@@ -20,7 +20,8 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 @stream_router.api_route("/stream/incoming-call", methods=["GET", "POST"])
 async def handle_incoming_call(request: Request):
     logging.info("Stream Incoming call received.")
-    return twilio_stream()
+    host = request.url.hostname
+    return twilio_stream(host)
 
 @stream_router.websocket("/stream/websocket")
 async def handle_media_stream(websocket: WebSocket):
